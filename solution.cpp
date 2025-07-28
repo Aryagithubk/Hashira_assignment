@@ -56,20 +56,20 @@ void print(big x) {
     cout << res << '\n';
 }
 
-void f(const string& jsonString) {
+void f(const string& js) {
     vector<Pt> points;
     int n = 0, k = 0;
 
-    regex pairRegex("\"(\\d+)\"\\s*:\\s*\\{\\s*\"base\"\\s*:\\s*\"(\\d+)\",\\s*\"value\"\\s*:\\s*\"([a-zA-Z0-9]+)\"\\s*\\}");
+    regex pairReg("\"(\\d+)\"\\s*:\\s*\\{\\s*\"base\"\\s*:\\s*\"(\\d+)\",\\s*\"value\"\\s*:\\s*\"([a-zA-Z0-9]+)\"\\s*\\}");
     smatch match;
 
-    regex keysRegex("\"keys\"\\s*:\\s*\\{[^\\}]*\"n\"\\s*:\\s*(\\d+),\\s*\"k\"\\s*:\\s*(\\d+)");
-    if (regex_search(jsonString, match, keysRegex)) {
+    regex keysReg("\"keys\"\\s*:\\s*\\{[^\\}]*\"n\"\\s*:\\s*(\\d+),\\s*\"k\"\\s*:\\s*(\\d+)");
+    if (regex_search(js, match, keysReg)) {
         n = stoi(match[1]);
         k = stoi(match[2]);
     }
 
-    auto begin = sregex_iterator(jsonString.begin(), jsonString.end(), pairRegex);
+    auto begin = sregex_iterator(js.begin(), js.end(), pairReg);
     auto end = sregex_iterator();
     for (auto it = begin; it != end; ++it) {
         int x = stoi((*it)[1]);
